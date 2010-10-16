@@ -29,6 +29,10 @@ all lookups via a highly flexible configuration.
 NOTE:  ProMonitor is currently only supported and working on charybdis but will
 	be supported on other popular IRCD's in the near future!
 
+ATTENTION: By using this software, you are stating
+	    that you have read and agreed to the terms in LICENSE.
+
+
 3. INSTALLATION
 ---------------
 
