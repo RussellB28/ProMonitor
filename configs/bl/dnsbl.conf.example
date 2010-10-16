@@ -1,0 +1,30 @@
+list
+{
+	1 = dnsbl.ahbl.org
+	2 = dnsbl.infinityirc.com
+	3 = tor.dnsbl.sectoor.de
+	4 = dnsbl.dronebl.org
+	5 = dnsbl.swiftbl.net
+	6 = rbl.efnet.org
+	7 = dnsbl.proxybl.org
+	8 = tor.dan.me.uk
+	9 = dnsbl.technoirc.org
+}
+
+badip
+{
+	66.90.104.167 = "Host is a Known Web Proxy."
+	216.104.38.110 = "Host is a Known Web Proxy."
+	99.198.127.150 = "Host is a Known Web Proxy."
+	94.23.231.202 = "Host is a Known Web Proxy."
+	212.48.121.183 = "Host is a Known Web Proxy."
+	76.73.16.122 = "Host is a Known Web Proxy."
+	174.143.11.196 = "Host is a Known Web Proxy."
+	67.159.44.42 = "Host is a Known Web Proxy."
+	83.142.230.176 = "Host is a Known Web Proxy."
+	209.119.116.24 = "Host is a Known Web Proxy."
+	67.159.44.91 = "Host is a Known Web Proxy."
+	174.120.248.18 = "Host is a Known Web Proxy."
+	87.117.205.10 = "Host is a Known Web Proxy."
+
+}

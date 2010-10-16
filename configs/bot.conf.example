@@ -1,0 +1,73 @@
+me {
+	name = "ProMonitor v1.0"
+	nick = "ProMonitor"
+	ident = "pro"
+       mchan = "#opers"
+	lchan = "#services"
+	modes = "+iw"
+	onick = "MrOper"
+}
+
+nickserv {
+	user = "ProMonitor"
+	pass = "NickServPwnz"
+}
+
+oper {
+	user = "ProMonitor"
+	pass = "OperPassLOL"
+}
+
+server {
+	ircd = "charybdis"
+	host = "1.2.3.4"
+	vhost = "5.6.7.8"
+	port = "6667"
+	spass = "someserverpass"
+}
+
+#############################
+### Module Config Options ###
+#############################
+# These modules are optional but for some functionality, atleast 1 of the following should be enabled. 
+# We recommend DNSBL should be enabled at all times!
+#
+# In order to enable/disable a module just change 'active' to yes or no.
+#
+# You can configure what happens when ProMonitor finds a user in any of the below lists by changing 'action'
+# Valid Actions are as follows:
+#	* akill - OperServ/AKILL the user from the network
+#	* gline - G-Line the user from the network (inspircd/unreal only)
+#	* zline - Z-Line the user from the network (inspircd/unreal only)
+#	* kline - K-Line the user from the network (charybdis only)
+#	* kill  - Kill the user from the network
+#	* log	 - Do Nothing but still output the result in the log channel
+#
+
+dnsbl
+{
+	active = "yes"
+	action = "log"
+	time	= "3d"
+}
+
+ident
+{
+	active = "yes"
+	action = "log"
+	time	= "3d"
+}
+
+nick
+{
+	active = "yes"
+	action = "log"
+	time	= "3d"
+}
+
+port
+{
+	active = "yes"
+	action = "log"
+	time	= "3d"
+}
