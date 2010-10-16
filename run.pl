@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 
-#use strict;
+use strict;
 use warnings;
 use lib 'modules';
 package pBot;
@@ -41,7 +41,7 @@ my $socket = IO::Socket::INET->new(
 
 # Throw the program into an infinite while loop
 while (1) {
-	$data = <$socket>;
+	my $data = <$socket>;
 	unless (defined($data)) {
 		sleep 3;
 		$socket = IO::Socket::INET->new(
@@ -54,12 +54,12 @@ while (1) {
 	}
 
     chomp($data);
-    undef $ex;
-    @ex = split(' ', $data);
+    #undef $ex;
+    my @ex = split(' ', $data);
 
     print("[IRC-RAW] ".$data."\n");
-    $USER = substr($ex[0], 1);
-	$bnick = config('me', 'nick');
+    my $USER = substr($ex[0], 1);
+	my $bnick = config('me', 'nick');
 
         if ($data =~ m/Found your hostname/) {
 		&pBot::CallBacks::irc_connect();
@@ -163,6 +163,17 @@ sub config {
         return 0;
     }
 }
+
+sub error {
+    my ( $type, $msg ) = @_;
+    my ($file);
+    if ( $type ne 0 ) {
+        $type = lc($type);
+        print("Error: $type - $msg");
+    }
+    exit;
+}
+
 
 sub count {
 	my (@array) = @_;

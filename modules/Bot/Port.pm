@@ -1,6 +1,4 @@
-# Copyright (c) 2010 Russell M Bradford. All rights reserved.
-
-#use strict;
+use strict;
 use warnings;
 use Net::DNS;
 use Config::Scoped;

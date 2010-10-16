@@ -1,6 +1,4 @@
-# Copyright (c) 2010 Russell M Bradford. All rights reserved.
-
-#use strict;
+use strict;
 use warnings;
 
 package pBot::Functions;

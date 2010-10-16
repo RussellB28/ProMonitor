@@ -1,6 +1,4 @@
-# Copyright (c) 2010 Russell M Bradford. All rights reserved.
-
-#use strict;
+use strict;
 use warnings;
 
 package pBot::Commands;
@@ -12,7 +10,7 @@ sub cmd_eval {
  	chomp($chan);
  	chomp($cmd);
  	chomp($message);
-	$onick = &pBot::config('me', 'onick');
+	my $onick = &pBot::config('me', 'onick');
 	if($owner =~ m/($onick)/)
 	{
 		eval($message);
@@ -37,7 +35,7 @@ sub cmd_uptime {
 	}
 	elsif(&pBot::trim($varz) =~ m/SYSTEM/)
 	{
-		$result = `uptime`;
+		my $result = `uptime`;
 		&pBot::Functions::MSG($chan,"2[UPTIME] System: ".$result);
 	}
 	else
@@ -53,7 +51,6 @@ sub cmd_stest {
  	chomp($cmd);
  	chomp($message);
 
-	$result = `uptime`;
 	&pBot::Functions::MSG($chan,"4[SERVER-CMD] ProMonitor is still connected to ".&pBot::config('server','host')." and active!");
 }
 
