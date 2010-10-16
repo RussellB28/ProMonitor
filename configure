@@ -1,0 +1,85 @@
+#!/usr/bin/perl
+# Copyright (c) 2010 Russell M Bradford. All rights reserved.
+
+use strict;
+use warnings;
+
+print(" ProMonitor Configuration Utility \n");
+print(" VERSION 1.0 \n");
+print("\n");
+print("Welcome to the ProMonitor Configuration Utility. . .\n");
+print("It is highly recommended you run this to ensure that all the bots modules are\n");
+print("supported and will work properly.\n");
+print("\n");
+sleep 2;
+print("Checking for required perl modules...\n");
+sleep 1;
+
+my ($die);
+
+print "Checking for IO::Socket..... ";
+eval {
+    require IO::Socket;
+    print "OK\n";
+    1;
+} or print("Not Found (install IO::Socket)\n") and $die = 1;
+
+print "Checking for IO::Socket::PortState..... ";
+eval {
+    require IO::Socket::PortState;
+    print "OK\n";
+    1;
+} or print("Not Found (install IO::Socket::PortState)\n") and $die = 1;
+
+print("Checking for Config::Scoped..... ");
+eval {
+    require Config::Scoped;
+    print "OK\n";
+    1;
+} or print("Not Found (install Config::Scoped)\n") and $die = 1;
+
+print("Checking for Getopt::Long..... ");
+eval {
+    require Getopt::Long;
+    print "OK\n";
+    1;
+} or print("Not Found (install Getopt::Long)\n") and $die = 1;
+
+print("Checking for Term::ANSIColor..... ");
+eval {
+    require Term::ANSIColor;
+    print "OK\n";
+    1;
+} or print("Not Found (install Term::ANSIColor)\n") and $die = 1;
+
+print("Checking for Sub::Delete..... ");
+eval {
+    require Sub::Delete;
+    print "OK\n";
+    1;
+} or print("Not Found (install Sub::Delete)\n") and $die = 1;
+
+print("Checking for Net::DNS ");
+eval {
+        require Net::DNS;
+        print "OK\n";
+        1;
+} or print("Not Found (install Net::DNS)\n") and $die = 1;
+
+
+print("Checking for Class::Unload..... ");
+eval {
+        require Class::Unload;
+        print "OK\n";
+        1;
+} or print("Not Found (install Class::Unload)\n") and $die = 1;
+
+print("\n");
+
+if ($die) {
+    die("Oh ShitCakes! Some of ProMonitor's required modules are missing. Please fix this and then re-run this utility\n");
+}
+
+print(
+"All required modules were found!\nYou may now run the bot using 'nohup perl run.pl > bot.log &'\n\n"
+);
