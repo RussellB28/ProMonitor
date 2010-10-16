@@ -14,8 +14,8 @@ sub irc_connect {
 sub irc_onconnect {
 	&pBot::send_sock("MODE ".&pBot::config('me', 'nick')." ".&pBot::config('me', 'modes')."\n");
 	&pBot::send_sock("OPER ".&pBot::config('oper', 'user')." ".&pBot::config('oper', 'pass')."\n");
-	&pBot::Functions::MSG("NickServ","IDENTIFY ".&pBot::config('nick', 'user')." ".&pBot::config('nick', 'pass')."");
-	&pBot::Functions::JOIN(&pBot::config('me', 'chan'),"null");
+	&pBot::Functions::MSG("NickServ","IDENTIFY ".&pBot::config('nickserv', 'user')." ".&pBot::config('nickserv', 'pass')."");
+	&pBot::Functions::JOIN(&pBot::config('me', 'lchan'),"null");
 
 }
 
