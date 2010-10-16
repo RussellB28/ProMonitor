@@ -1,0 +1,52 @@
+                README
+---------------------------------------
+
+TABLE OF CONTENTS
+-----------------
+  1. Credits
+  2. Description
+  3. Installation
+  4. Getting support
+  5. Reporting bugs
+
+1. CREDITS
+----------
+
+ProMonitor is developed by Russell M Bradford
+The Following people have contributed their code or knowledge to this project
+
+N/A
+
+
+2. DESCRIPTION
+--------------
+
+ProMonitor is a Modular IRC Bot that will perform a selection of actions based
+on IRC Activity. ProMonitor comes with a built in DNSBL lookup module, port
+scanning module and local lookup modules. ProMonitor can be set to respond to
+all lookups via a highly flexible configuration.
+
+NOTE:  ProMonitor is currently only supported and working on charybdis but will
+	be supported on other popular IRCD's in the near future!
+
+3. INSTALLATION
+---------------
+
+See docs/INSTALL for information on how to install ProMonitor
+
+4. GETTING SUPPORT
+------------------
+
+Should you need any help with ProMonitor, please drop by
+our IRC chatroom:
+
+Host: irc.shadowcoast.net
+Port: 6667 | SSL: 6697
+Channel: #promonitor
+
+
+5. REPORTING BUGS
+-----------------
+
+Should you come across a bug within the original code, please
+report it to us by visiting our IRC ChatRoom stated above

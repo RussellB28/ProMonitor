@@ -1,0 +1,22 @@
+----------------------------------------
+             INSTALLATION
+----------------------------------------
+
+Before running pBot, you MUST run the configuration utility to check that you have all the required modules.
+To do this use:
+
+./configure
+
+If all required CPAN modules are working and exist, you are ready to start using ProMonitor.
+Before you do, you will need to edit the following files:
+
+* configs/bot.conf
+* configs/bl/dnsbl.conf
+* configs/bl/nicks.conf
+* configs/bl/idents.conf
+
+
+Once you have edited all the required files, you are then ready to run ProMonitor!
+To do this use the recommended command:
+
+'nohup perl run.pl > bot.log &'
