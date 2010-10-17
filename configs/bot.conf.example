@@ -19,11 +19,16 @@ oper {
 }
 
 server {
-	ircd = "charybdis"
+	ircd = "shadowircd"
 	host = "1.2.3.4"
 	vhost = "5.6.7.8"
 	port = "6667"
 	spass = "someserverpass"
+}
+
+ssl {
+	key = "configs/ssl/promonitor.key"
+	cert = "configs/ssl/promonitor.pem"
 }
 
 #############################
