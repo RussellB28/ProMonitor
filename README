@@ -26,8 +26,8 @@ on IRC Activity. ProMonitor comes with a built in DNSBL lookup module, port
 scanning module and local lookup modules. ProMonitor can be set to respond to
 all lookups via a highly flexible configuration.
 
-NOTE:  ProMonitor is currently only supported and working on charybdis but will
-	be supported on other popular IRCD's in the near future!
+NOTE:  ProMonitor is currently only supported and working on shadowircd and
+	charybdis but will be supported on other popular IRCD's in the near future!
 
 ATTENTION: By using this software, you are stating
 	    that you have read and agreed to the terms in LICENSE.

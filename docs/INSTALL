@@ -15,8 +15,15 @@ Before you do, you will need to edit the following files:
 * configs/bl/nicks.conf
 * configs/bl/idents.conf
 
+Once you have edited all the required files, it is highly recommended you generate some new SSL certificates
+as the private and public key are both accessible by the public and can be used on your irc server. To do this
+use SSH and change to the configs/ssl directory. You will need to execute the following commands in order:
 
-Once you have edited all the required files, you are then ready to run ProMonitor!
+* openssl genrsa -out promonitor.key 1024
+* openssl req -new -key promonitor.key -out promonitor.req
+* openssl req -x509 -days 30 -key promonitor.key -in promonitor.req -out promonitor.pem
+
+Once you have edited and generated all the required files, you are then ready to run ProMonitor!
 To do this use the recommended command:
 
 'nohup perl run.pl > bot.log &'
