@@ -5,9 +5,10 @@ use strict;
 use warnings;
 use lib 'modules';
 package pBot;
-use IO::Socket;
 use Net::DNS;
 use Config::Scoped;
+use Socket;
+use Net::SSLeay qw(die_now die_if_ssl_error copy_session_id);
 use IRC::CallBacks;
 use IRC::Functions;
 use Bot::Commands;
@@ -18,6 +19,10 @@ our $VERSION = "1.0a";
 our (%rawcmds, %timers, %COMMANDS);
 our $c_netop;
 
+Net::SSLeay::load_error_strings();
+Net::SSLeay::SSLeay_add_ssl_algorithms();
+Net::SSLeay::randomize();
+
 # Get configuration values
 my $conf = Config::Scoped->new(
     file => "configs/bot.conf",
@@ -27,30 +32,35 @@ my $conf = Config::Scoped->new(
 my $settings = $conf->parse;
 
 # Open the socket
-my $socket = IO::Socket::INET->new(
-    Proto => "tcp",
-    LocalAddr => config('server', 'vhost'),
-    PeerAddr => config('server', 'host'),
-    PeerPort => config('server', 'port'),
-) or error("bot", "Connection to ".config('server', 'host')." failed.\n");
+my $dest_ip = gethostbyname(config('server', 'host'));
+my $dest_serv_params = sockaddr_in(config('server', 'port'), $dest_ip );
 
+socket( S, &AF_INET, &SOCK_STREAM, 0 ) or error("bot", "The Socket could not be created.\n");
+connect( S, $dest_serv_params ) or error("bot", "The Connection to the server failed :(!\n");
 
-# Connect!
-#irc_connect();
+my $ctx = Net::SSLeay::CTX_new() or die_now("Cannot create SSL_CTX $!");
+Net::SSLeay::CTX_set_options( $ctx,&Net::SSLeay::OP_NO_SSLv2 ) and die_if_ssl_error("SSL_CTX_SETOPTIONS Failed!");
+Net::SSLeay::CTX_use_RSAPrivateKey_file ($ctx, config('ssl', 'key'), &Net::SSLeay::FILETYPE_PEM) and die_if_ssl_error("Error: Private Key not Found or Valid");
+Net::SSLeay::CTX_use_certificate_file ($ctx, config('ssl', 'cert'),&Net::SSLeay::FILETYPE_PEM) and die_if_ssl_error("Error: Certificate not Found or Valid");
 
+my $ssl1 = Net::SSLeay::new($ctx) or die_now("Cannot create SSL $!");
+
+Net::SSLeay::set_fd( $ssl1, fileno(S) );
+my $res = Net::SSLeay::connect($ssl1) and die_if_ssl_error("SSL failed to Connect!");
 
 # Throw the program into an infinite while loop
 while (1) {
-	my $data = <$socket>;
+	my $data = Net::SSLeay::read($ssl1);
 	unless (defined($data)) {
 		sleep 3;
-		$socket = IO::Socket::INET->new(
-			Proto => "tcp",
-			LocalAddr => config('server', 'vhost'),
-			PeerAddr => config('server', 'host'),
-			PeerPort => config('server', 'port'),
-		) or error("bot", "Connection to ".config('server', 'host')." failed.\n");
-		&pBot::CallBacks->irc_connect();
+		#$socket = IO::Socket::SSL->new(
+		#	Proto => "tcp",
+		#	LocalAddr => config('server', 'vhost'),
+		#	PeerAddr => config('server', 'host'),
+		#	PeerPort => config('server', 'port'),
+		#	SSL_verify_mode => 0x01,
+		#) or error("bot", "Connection to ".config('server', 'host')." failed.\n");
+		#&pBot::CallBacks::irc_connect();
 	}
 
     chomp($data);
@@ -69,7 +79,7 @@ while (1) {
 		&pBot::CallBacks::irc_onconnect();
 	 }
 
-	 if(&pBot::config('me', 'ircd') eq lc("charybdis"))
+	 if(&pBot::config('server', 'ircd') eq lc("shadowircd"))
 	 {
 
         	if ($data =~ m/Client connecting/) {
@@ -147,7 +157,8 @@ while (1) {
 sub send_sock {
     my ($str) = @_;
     chomp($str);
-    send($socket, $str."\r\n", 0);
+    $res = Net::SSLeay::write( $ssl1, $str."\r\n");
+    die_if_ssl_error("Send Socket Error while Writing via SSL (Content: $str)");
     print("[BOT-RAW] ".$str."\n");
 }
 
