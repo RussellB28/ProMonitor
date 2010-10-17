@@ -24,6 +24,13 @@ eval {
     1;
 } or print("Not Found (install IO::Socket)\n") and $die = 1;
 
+print "Checking for Socket..... ";
+eval {
+    require Socket;
+    print "OK\n";
+    1;
+} or print("Not Found (install Socket)\n") and $die = 1;
+
 print "Checking for IO::Socket::PortState..... ";
 eval {
     require IO::Socket::PortState;
@@ -65,6 +72,13 @@ eval {
         print "OK\n";
         1;
 } or print("Not Found (install Net::DNS)\n") and $die = 1;
+
+print("Checking for Net::SSLeay ");
+eval {
+        require Net::SSLeay;
+        print "OK\n";
+        1;
+} or print("Not Found (install Net::SSLeay)\n") and $die = 1;
 
 
 print("Checking for Class::Unload..... ");
