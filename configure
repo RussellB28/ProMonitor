@@ -52,19 +52,6 @@ eval {
     1;
 } or print("Not Found (install Getopt::Long)\n") and $die = 1;
 
-print("Checking for Term::ANSIColor..... ");
-eval {
-    require Term::ANSIColor;
-    print "OK\n";
-    1;
-} or print("Not Found (install Term::ANSIColor)\n") and $die = 1;
-
-print("Checking for Sub::Delete..... ");
-eval {
-    require Sub::Delete;
-    print "OK\n";
-    1;
-} or print("Not Found (install Sub::Delete)\n") and $die = 1;
 
 print("Checking for Net::DNS ");
 eval {
@@ -80,13 +67,6 @@ eval {
         1;
 } or print("Not Found (install Net::SSLeay)\n") and $die = 1;
 
-
-print("Checking for Class::Unload..... ");
-eval {
-        require Class::Unload;
-        print "OK\n";
-        1;
-} or print("Not Found (install Class::Unload)\n") and $die = 1;
 
 print("\n");
 
