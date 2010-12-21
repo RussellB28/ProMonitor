@@ -1,3 +1,5 @@
+# Copyright (c) 2010 ProMonitor. All rights reserved.
+
 use strict;
 use warnings;
 use Net::DNS;
@@ -8,6 +10,12 @@ package pBot::Info;
 
 
 sub CheckNick {
+
+        if(&pBot::config('nick', 'active') eq lc("no"))
+        {
+                return 0;
+        }
+
 	my ( $nick ) = @_;
 	my $dconf = `pwd`;
 	chomp $dconf;
@@ -26,6 +34,13 @@ sub CheckNick {
 }
 
 sub CheckIdent {
+
+        if(&pBot::config('ident', 'active') eq lc("no"))
+        {
+                return 0;
+        }
+
+
 	my ( $ident ) = @_;
 	my $dconf = `pwd`;
 	chomp $dconf;

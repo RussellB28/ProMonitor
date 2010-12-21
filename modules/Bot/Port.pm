@@ -1,3 +1,5 @@
+# Copyright (c) 2010 ProMonitor. All rights reserved.
+
 use strict;
 use warnings;
 use Net::DNS;
@@ -9,6 +11,12 @@ use IO::Socket::PortState qw(check_ports);
 
 
 sub CheckPort {
+
+        if(&pBot::config('port', 'active') eq lc("no"))
+        {
+                return 0;
+        }
+
 	my ( $ip ) = @_;
    	my %porthash = (
       			tcp => {
