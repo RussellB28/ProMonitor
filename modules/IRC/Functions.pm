@@ -1,3 +1,5 @@
+# Copyright (c) 2010 ProMonitor. All rights reserved.
+
 use strict;
 use warnings;
 
@@ -31,8 +33,20 @@ sub PART {
 	&pBot::send_sock("PART ".$chan." ".$reason."\n");
 }
 
-sub OPERSTATS {
-	&pBot::send_sock("STATS P\n");
+sub KLINE {
+	my($time,$host,$reason) = @_;
+        chomp($time);
+        chomp($host);
+        chomp($reason);
+        &pBot::send_sock("KLINE $time $host :$reason\n");
+}
+
+sub AKILL {
+	my($time,$host,$reason) = @_;
+        chomp($time);
+        chomp($host);
+        chomp($reason);
+	&pBot::send_sock("PRIVMSG OperServ :AKILL ADD $host !T $time $reason\n");
 }
 
 1;
