@@ -102,6 +102,24 @@ while (1) {
 			&pBot::CallBacks::irc_cliflood(&pBot::config('me', 'lchan'),$ex[8],$ex[12]);
 	 	}
 	 }
+	elsif(&pBot::config('server', 'ircd') eq lc("inspircd"))
+	{
+        	if ($data =~ m/Client connecting/) {
+			$ex[10] =~ s/\[//g;
+			$ex[10] =~ s/\]//g;
+			$ex[9] =~ s/\(//g;
+			$ex[9] =~ s/\)//g;
+ 			my @sex = split('@', $ex[9]);
+			&pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[8],$sex[8],$sex[8],$ex[7]);
+	 	}
+
+        	if ($data =~ m/Client exiting/) {
+			$ex[9] =~ s/\(//g;
+			$ex[9] =~ s/\)//g;
+ 			my @sex = split('@', $ex[9]);
+			&pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[6],$sex[6],$sex[6]);
+	 	}
+	}
 
 
         if ($ex[1] eq "JOIN") {

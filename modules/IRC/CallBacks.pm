@@ -23,12 +23,32 @@ sub irc_cliconnect {
  	chomp($ident);
  	chomp($host);
  	chomp($ip);
-	&pBot::Functions::MSG($chan,"CONNECT: $nick ($ident @ $host) [$ip]");
-	&pBot::DNSBL::Check($ip);
-	&pBot::Port::CheckPort($ip);
-	&pBot::DNSBL::CheckL($ip);
-	&pBot::Info::CheckIdent($ident);
-	&pBot::Info::CheckNick($nick);
+
+	if(&pBot::config('server', 'ircd') eq "inspircd")
+	{
+		 my @b1 = split('!', $host);
+		 my $nickb = $b1[0];
+		 my @b2 = split('@', $host);
+		 my $identb = $b2[0];
+		 my $hostb = $b2[1];
+
+		&pBot::Functions::MSG($chan,"CONNECT: $nickb ($identb @ $hostb) [$ip]");
+		&pBot::DNSBL::Check($ip);
+		&pBot::Port::CheckPort($ip);
+		&pBot::DNSBL::CheckL($ip);
+		&pBot::Info::CheckIdent($identb);
+		&pBot::Info::CheckNick($nickb);	
+		 
+	}
+	elsif(&pBot::config('server', 'ircd') eq "shadowircd")
+	{
+		&pBot::Functions::MSG($chan,"CONNECT: $nick ($ident @ $host) [$ip]");
+		&pBot::DNSBL::Check($ip);
+		&pBot::Port::CheckPort($ip);
+		&pBot::DNSBL::CheckL($ip);
+		&pBot::Info::CheckIdent($ident);
+		&pBot::Info::CheckNick($nick);
+	}
 }
 
 sub irc_cliexit {
@@ -36,7 +56,21 @@ sub irc_cliexit {
  	chomp($nick);
  	chomp($ident);
  	chomp($host);
-	&pBot::Functions::MSG($chan,"EXITING: $nick ($ident @ $host)");
+
+	if(&pBot::config('server', 'ircd') eq "inspircd")
+	{
+		 my @b1 = split('!', $host);
+		 my $nickb = $b1[0];
+		 my @b2 = split('@', $host);
+		 my $identb = $b2[0];
+		 my $hostb = $b2[1];
+
+		&pBot::Functions::MSG($chan,"EXITING: $nickb ($identb @ $hostb)");
+	}
+	elsif(&pBot::config('server', 'ircd') eq "shadowircd")
+	{
+		&pBot::Functions::MSG($chan,"EXITING: $nick ($ident @ $host)");
+	}
 }
 
 sub irc_cliflood {
