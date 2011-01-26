@@ -40,7 +40,7 @@ sub Check {
 					my ($ipr1,$ipr2,$ipr3,$ipr4)=split /\./,$rr->address;
 					if($ipr4 > 0 and $ipr4 < 30)
 					{
-						&pBot::Functions::MSG(&pBot::config('me', 'lchan'),>> HOST $ip has been found in $config->{list}->{$i} (Reason: $ipr4)");
+						&pBot::Functions::MSG(&pBot::config('me', 'lchan'),">> HOST $ip has been found in $config->{list}->{$i} (Reason: $ipr4)");
 						$bls = $config->{list}->{$i};
 						$count++;
 					}
@@ -51,7 +51,7 @@ sub Check {
 
 	if($count > 0)
 	{
-		&pBot::Functions::MSG(&pBot::config('me', 'lchan'),>> HOST $ip found in $count blacklists [Action: ".uc(&pBot::config('dnsbl', 'action'))."]");
+		&pBot::Functions::MSG(&pBot::config('me', 'lchan'),">> HOST $ip found in $count blacklists [Action: ".uc(&pBot::config('dnsbl', 'action'))."]");
 		if(&pBot::config('dnsbl', 'action') eq lc("kline"))
 		{
 			&pBot::Functions::KLINE(&pBot::config('dnsbl', 'time'),"$ip","Your host is listed in the following blacklist: $bls");
@@ -65,7 +65,7 @@ sub Check {
 	}
 	else
 	{
-		&pBot::Functions::MSG(&pBot::config('me', 'lchan'),>> HOST $ip found in $count blacklists");
+		&pBot::Functions::MSG(&pBot::config('me', 'lchan'),">> HOST $ip found in $count blacklists");
 		return 1;
 	}
 }
@@ -86,7 +86,7 @@ sub CheckL {
 
 		if($config->{badip}->{$ip})
 		{
-			&pBot::Functions::MSG(&pBot::config('me', 'lchan'),>> HOST $ip is listed in ProBL (Reason: $config->{badip}->{$ip}) [ACTION: ".uc(&pBot::config('dnsbl', 'action'))."]");
+			&pBot::Functions::MSG(&pBot::config('me', 'lchan'),">> HOST $ip is listed in ProBL (Reason: $config->{badip}->{$ip}) [ACTION: ".uc(&pBot::config('dnsbl', 'action'))."]");
 
                         if(&pBot::config('dnsbl', 'action') eq lc("kline"))
 			{
@@ -101,7 +101,7 @@ sub CheckL {
 		}
 		else
 		{
-			&pBot::Functions::MSG(&pBot::config('me', 'lchan'),>> HOST $ip was not found in ProBL (Local List)");
+			&pBot::Functions::MSG(&pBot::config('me', 'lchan'),">> HOST $ip was not found in ProBL (Local List)");
 		}
 
 }
