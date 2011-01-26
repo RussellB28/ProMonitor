@@ -105,18 +105,12 @@ while (1) {
 	elsif(&pBot::config('server', 'ircd') eq lc("inspircd"))
 	{
         	if ($data =~ m/Client connecting/) {
-			$ex[10] =~ s/\[//g;
-			$ex[10] =~ s/\]//g;
-			$ex[9] =~ s/\(//g;
-			$ex[9] =~ s/\)//g;
- 			my @sex = split('@', $ex[9]);
+			$ex[7] =~ s/\[//g;
+			$ex[7] =~ s/\]//g;
 			&pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[8],$ex[8],$ex[8],$ex[7]);
 	 	}
 
         	if ($data =~ m/Client exiting/) {
-			$ex[9] =~ s/\(//g;
-			$ex[9] =~ s/\)//g;
- 			my @sex = split('@', $ex[9]);
 			&pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[6],$ex[6],$ex[6]);
 	 	}
 	}
