@@ -74,12 +74,12 @@ while (1) {
     my $USER = substr($ex[0], 1);
 	my $bnick = config('me', 'nick');
 
-        if ($data =~ m/Found your hostname/) {
+        if ($ex[1] eq "NOTICE" && $ex[2] eq "Auth") {
 		&pBot::CallBacks::irc_connect();
 	 }
 
-        if ($data =~ m/MODE ($bnick)/) {
-
+        if ($ex[1] eq "376") {
+		&pBot::CallBacks::irc_onconnect();
 	}
 
 	 if(&pBot::config('server', 'ircd') eq lc("shadowircd"))
@@ -104,24 +104,16 @@ while (1) {
         	if ($data =~ m/Possible Flooder/) {
 			&pBot::CallBacks::irc_cliflood(&pBot::config('me', 'lchan'),$ex[8],$ex[12]);
 	 	}
-
-                if ($data =~ m/You have 45 seconds to identify to your nickname before it is changed./) {
-                        &pBot::CallBacks::irc_onconnect();
-                }
 	 }
         elsif(&pBot::config('server', 'ircd') eq lc("inspircd"))
         {
-                if ($data =~ m/You have 45 seconds to identify to your nickname before it is changed./) {
-                        &pBot::CallBacks::irc_onconnect();
-                }
-
-                if ($data =~ m/Client connecting/) {
+                if ($ex[1] eq "NOTICE" && $ex[2] eq $bnick && $data =~ m/Client connecting/) {
                         $ex[10] =~ s/\[//g;
                         $ex[10] =~ s/\]//g;
                         &pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[9],$ex[9],$ex[9],$ex[10]);
                 }
 
-                if ($data =~ m/Client exiting/) {
+                if ($ex[1] eq "NOTICE" && $ex[2] eq $bnick && $data =~ m/Client exiting/) {
                         &pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[10],$ex[10],$ex[10]);
                 }
         }
