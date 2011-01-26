@@ -33,10 +33,13 @@ my $settings = $conf->parse;
 
 # Open the socket
 my $dest_ip = gethostbyname(config('server', 'host'));
+my $our_ip = gethostbyname(config('server', 'vhost'));
 my $dest_serv_params = sockaddr_in(config('server', 'port'), $dest_ip );
 
-socket( S, &AF_INET, &SOCK_STREAM, 0 ) or error("bot", "The Socket could not be created.\n");
-connect( S, $dest_serv_params ) or error("bot", "The Connection to the server failed :(!\n");
+socket( S, &AF_INET, &SOCK_STREAM, 0 ) or error("bot", "The Socket could not be created: $!\n");
+bind (S, sockaddr_in(0, $our_ip )) or error("bot", "The Socket could bind to address: $! \n");
+connect( S, $dest_serv_params ) or error("bot", "The Connection to the server failed: $!\n");
+
 
 my $ctx = Net::SSLeay::CTX_new() or die_now("Cannot create SSL_CTX $!");
 Net::SSLeay::CTX_set_options( $ctx,&Net::SSLeay::OP_NO_SSLv2 ) and die_if_ssl_error("SSL_CTX_SETOPTIONS Failed!");
@@ -76,8 +79,8 @@ while (1) {
 	 }
 
         if ($data =~ m/MODE ($bnick)/) {
-		&pBot::CallBacks::irc_onconnect();
-	 }
+
+	}
 
 	 if(&pBot::config('server', 'ircd') eq lc("shadowircd"))
 	 {
@@ -101,19 +104,27 @@ while (1) {
         	if ($data =~ m/Possible Flooder/) {
 			&pBot::CallBacks::irc_cliflood(&pBot::config('me', 'lchan'),$ex[8],$ex[12]);
 	 	}
-	 }
-	elsif(&pBot::config('server', 'ircd') eq lc("inspircd"))
-	{
-        	if ($data =~ m/Client connecting/) {
-			$ex[7] =~ s/\[//g;
-			$ex[7] =~ s/\]//g;
-			&pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[8],$ex[8],$ex[8],$ex[7]);
-	 	}
 
-        	if ($data =~ m/Client exiting/) {
-			&pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[6],$ex[6],$ex[6]);
-	 	}
-	}
+                if ($data =~ m/You have 45 seconds to identify to your nickname before it is changed./) {
+                        &pBot::CallBacks::irc_onconnect();
+                }
+	 }
+        elsif(&pBot::config('server', 'ircd') eq lc("inspircd"))
+        {
+                if ($data =~ m/You have 45 seconds to identify to your nickname before it is changed./) {
+                        &pBot::CallBacks::irc_onconnect();
+                }
+
+                if ($data =~ m/Client connecting/) {
+                        $ex[10] =~ s/\[//g;
+                        $ex[10] =~ s/\]//g;
+                        &pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[9],$ex[9],$ex[9],$ex[10]);
+                }
+
+                if ($data =~ m/Client exiting/) {
+                        &pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[10],$ex[10],$ex[10]);
+                }
+        }
 
 
         if ($ex[1] eq "JOIN") {
