@@ -110,14 +110,14 @@ while (1) {
 			$ex[9] =~ s/\(//g;
 			$ex[9] =~ s/\)//g;
  			my @sex = split('@', $ex[9]);
-			&pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[8],$sex[8],$sex[8],$ex[7]);
+			&pBot::CallBacks::irc_cliconnect(&pBot::config('me', 'lchan'),$ex[8],$ex[8],$ex[8],$ex[7]);
 	 	}
 
         	if ($data =~ m/Client exiting/) {
 			$ex[9] =~ s/\(//g;
 			$ex[9] =~ s/\)//g;
  			my @sex = split('@', $ex[9]);
-			&pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[6],$sex[6],$sex[6]);
+			&pBot::CallBacks::irc_cliexit(&pBot::config('me', 'lchan'),$ex[6],$ex[6],$ex[6]);
 	 	}
 	}
 
